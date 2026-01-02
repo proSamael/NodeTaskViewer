@@ -1,0 +1,8 @@
+00000000 struct __cppobj __attribute__((packed)) __attribute__((aligned(1))) AWARD_ITEMS_CAND // sizeof=0x11
+00000000 {
+00000000     unsigned int m_ulAwardItems;
+00000004     unsigned int m_ulAwardCmnItems;
+00000008     unsigned int m_ulAwardTskItems;
+0000000C     ITEM_WANTED *m_AwardItems;
+00000010     bool m_bRandChoose;
+00000011 };

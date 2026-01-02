@@ -1,0 +1,85 @@
+int __cdecl ATaskTemplMan::LoadTasksFromPackForTimeTool(
+        ATaskTemplMan_0 *const this,
+        const char *szPackPath,
+        bool bLoadDescript,
+        unsigned int *const lPackVersion,
+        unsigned int *const lToolVersion)
+{
+  size_t v5; // eax
+  const char *v7; // [esp+0h] [ebp-458h]
+  ATaskTempl *v8; // [esp+14h] [ebp-444h]
+  char log[1028]; // [esp+20h] [ebp-438h] BYREF
+  ATaskTempl *pTempl; // [esp+424h] [ebp-34h]
+  unsigned int i; // [esp+428h] [ebp-30h]
+  int *pOffs; // [esp+42Ch] [ebp-2Ch]
+  TASK_PACK_HEADER tph; // [esp+430h] [ebp-28h] BYREF
+  FILE *fp; // [esp+448h] [ebp-10h]
+  bool bLoadDescripta; // [esp+44Fh] [ebp-9h]
+
+  bLoadDescripta = bLoadDescript;
+  fp = fopen(szPackPath, "rb");
+  if ( !fp )
+    return 0;
+  fread(&tph, 0xCu, 1u, fp);
+  if ( tph.magic != -1819966623 )
+    return -1;
+  if ( tph.version == task_templ_cur_version )
+  {
+    if ( tph.item_count )
+    {
+      pOffs = (int *)operator new[](4 * tph.item_count);
+      ++g_ulNewCount;
+      fread(pOffs, 4u, tph.item_count, fp);
+      for ( i = 0; i < tph.item_count; ++i )
+      {
+        if ( !fseek(fp, pOffs[i], 0) )
+        {
+          v8 = (ATaskTempl *)operator new(0x818u);
+          ATaskTempl::ATaskTempl(v8);
+          pTempl = v8;
+          ++g_ulNewCount;
+          if ( ATaskTempl::LoadFromBinFile(v8, fp) )
+          {
+            ATaskTemplMan::AddOneTaskTempl(this, pTempl);
+            TaskInterface::WriteLog(0, pTempl->m_ID, 2, (int)"LoadTask", v7);
+          }
+          else
+          {
+            TaskInterface::WriteLog(0, pTempl->m_ID, 0, (int)"Cant Load Task", v7);
+            if ( pTempl )
+            {
+              (*((void (__cdecl **)(ATaskTempl *))pTempl->_vptr_ATaskTempl + 1))(pTempl);
+              pTempl = 0;
+              ++g_ulDelCount;
+            }
+          }
+        }
+      }
+      v5 = abase::hash_map<unsigned long,ATaskTempl *,_task_hash_func,abase::default_alloc>::size(&this->m_TaskTemplMap);
+      sprintf(log, "LoadTask, Count = %d", v5);
+      TaskInterface::WriteLog(0, 0, 2, (int)log, v7);
+      if ( pOffs )
+      {
+        operator delete[](pOffs);
+        pOffs = 0;
+        ++g_ulDelCount;
+      }
+      fclose(fp);
+      ATaskTemplMan::UpdateTimeLimitCheckList(this);
+      return 1;
+    }
+    else
+    {
+      return -4;
+    }
+  }
+  else
+  {
+    *lPackVersion = tph.version;
+    *lToolVersion = task_templ_cur_version;
+    if ( tph.version <= task_templ_cur_version )
+      return -3;
+    else
+      return -2;
+  }
+}

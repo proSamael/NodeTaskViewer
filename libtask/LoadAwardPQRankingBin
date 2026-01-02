@@ -1,0 +1,21 @@
+bool __cdecl LoadAwardPQRankingBin(FILE *fp, AWARD_PQ_RANKING *const pr, unsigned int ulVersion)
+{
+  unsigned int i; // [esp+Ch] [ebp-Ch]
+
+  fread(pr, 1u, 1u, fp);
+  if ( pr->m_RankingAward )
+  {
+    operator delete[](pr->m_RankingAward);
+    pr->m_RankingAward = 0;
+    ++g_ulDelCount;
+  }
+  pr->m_RankingAward = 0;
+  if ( pr->m_ulRankingAwardNum )
+  {
+    pr->m_RankingAward = (RANKING_AWARD *)operator new[](21 * pr->m_ulRankingAwardNum);
+    ++g_ulNewCount;
+  }
+  for ( i = 0; i < pr->m_ulRankingAwardNum; ++i )
+    fread(&pr->m_RankingAward[i], 0x15u, 1u, fp);
+  return 1;
+}

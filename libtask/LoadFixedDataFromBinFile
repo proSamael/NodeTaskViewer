@@ -1,0 +1,517 @@
+bool __cdecl ATaskTemplFixedData::LoadFixedDataFromBinFile(ATaskTemplFixedData *const this, FILE *fp)
+{
+  unsigned int m_ulTeamMemsWanted; // esi
+  unsigned int m_ulPlayerWanted; // esi
+  PLAYER_WANTED *v5; // [esp+Ch] [ebp-ACh]
+  TEAM_MEM_WANTED *v6; // [esp+1Ch] [ebp-9Ch]
+  AWARD_ITEMS_SCALE *v7; // [esp+2Ch] [ebp-8Ch]
+  AWARD_ITEMS_SCALE *v8; // [esp+3Ch] [ebp-7Ch]
+  AWARD_RATIO_SCALE *v9; // [esp+4Ch] [ebp-6Ch]
+  AWARD_RATIO_SCALE *v10; // [esp+5Ch] [ebp-5Ch]
+  AWARD_DATA *v11; // [esp+6Ch] [ebp-4Ch]
+  AWARD_DATA *v12; // [esp+80h] [ebp-38h]
+  AWARD_ITEMS_SCALE *m_AwByItems_F; // [esp+88h] [ebp-30h]
+  AWARD_ITEMS_SCALE *m_AwByItems_S; // [esp+8Ch] [ebp-2Ch]
+  AWARD_RATIO_SCALE *m_AwByRatio_F; // [esp+90h] [ebp-28h]
+  AWARD_RATIO_SCALE *m_AwByRatio_S; // [esp+94h] [ebp-24h]
+  AWARD_DATA *m_Award_F; // [esp+98h] [ebp-20h]
+  AWARD_DATA *m_Award_S; // [esp+9Ch] [ebp-1Ch]
+  Task_Region *t; // [esp+A0h] [ebp-18h]
+  TEAM_MEM_WANTED *v20; // [esp+A4h] [ebp-14h]
+  TEAM_MEM_WANTED *v21; // [esp+A4h] [ebp-14h]
+  ITEM_WANTED *iwa; // [esp+A8h] [ebp-10h]
+  ITEM_WANTED *iw; // [esp+A8h] [ebp-10h]
+  unsigned int i; // [esp+ACh] [ebp-Ch]
+  unsigned int ia; // [esp+ACh] [ebp-Ch]
+  unsigned int ib; // [esp+ACh] [ebp-Ch]
+  unsigned int ic; // [esp+ACh] [ebp-Ch]
+  unsigned int id; // [esp+ACh] [ebp-Ch]
+  unsigned int ie; // [esp+ACh] [ebp-Ch]
+  unsigned int ig; // [esp+ACh] [ebp-Ch]
+  unsigned int ih; // [esp+ACh] [ebp-Ch]
+  unsigned int ii; // [esp+ACh] [ebp-Ch]
+  unsigned int ij; // [esp+ACh] [ebp-Ch]
+  unsigned int ik; // [esp+ACh] [ebp-Ch]
+  unsigned int il; // [esp+ACh] [ebp-Ch]
+  unsigned int im; // [esp+ACh] [ebp-Ch]
+  unsigned int in; // [esp+ACh] [ebp-Ch]
+  unsigned int io; // [esp+ACh] [ebp-Ch]
+  unsigned int ip; // [esp+ACh] [ebp-Ch]
+  unsigned int iq; // [esp+ACh] [ebp-Ch]
+  unsigned int ir; // [esp+ACh] [ebp-Ch]
+
+  if ( this->m_Award_S )
+  {
+    m_Award_S = this->m_Award_S;
+    if ( m_Award_S )
+    {
+      AWARD_DATA::~AWARD_DATA(m_Award_S);
+      operator delete(m_Award_S);
+    }
+    this->m_Award_S = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_Award_F )
+  {
+    m_Award_F = this->m_Award_F;
+    if ( m_Award_F )
+    {
+      AWARD_DATA::~AWARD_DATA(m_Award_F);
+      operator delete(m_Award_F);
+    }
+    this->m_Award_F = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_AwByRatio_S )
+  {
+    m_AwByRatio_S = this->m_AwByRatio_S;
+    if ( m_AwByRatio_S )
+    {
+      AWARD_RATIO_SCALE::~AWARD_RATIO_SCALE(m_AwByRatio_S);
+      operator delete(m_AwByRatio_S);
+    }
+    this->m_AwByRatio_S = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_AwByRatio_F )
+  {
+    m_AwByRatio_F = this->m_AwByRatio_F;
+    if ( m_AwByRatio_F )
+    {
+      AWARD_RATIO_SCALE::~AWARD_RATIO_SCALE(m_AwByRatio_F);
+      operator delete(m_AwByRatio_F);
+    }
+    this->m_AwByRatio_F = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_AwByItems_S )
+  {
+    m_AwByItems_S = this->m_AwByItems_S;
+    if ( m_AwByItems_S )
+    {
+      AWARD_ITEMS_SCALE::~AWARD_ITEMS_SCALE(m_AwByItems_S);
+      operator delete(m_AwByItems_S);
+    }
+    this->m_AwByItems_S = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_AwByItems_F )
+  {
+    m_AwByItems_F = this->m_AwByItems_F;
+    if ( m_AwByItems_F )
+    {
+      AWARD_ITEMS_SCALE::~AWARD_ITEMS_SCALE(m_AwByItems_F);
+      operator delete(m_AwByItems_F);
+    }
+    this->m_AwByItems_F = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_tmStart )
+  {
+    operator delete[](this->m_tmStart);
+    this->m_tmStart = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_tmEnd )
+  {
+    operator delete[](this->m_tmEnd);
+    this->m_tmEnd = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_plChangeKey )
+  {
+    operator delete[](this->m_plChangeKey);
+    this->m_plChangeKey = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_plChangeKeyValue )
+  {
+    operator delete[](this->m_plChangeKeyValue);
+    this->m_plChangeKeyValue = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_pbChangeType )
+  {
+    operator delete[](this->m_pbChangeType);
+    this->m_pbChangeType = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_PremItems )
+  {
+    operator delete[](this->m_PremItems);
+    this->m_PremItems = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_GivenItems )
+  {
+    operator delete[](this->m_GivenItems);
+    this->m_GivenItems = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_TeamMemsWanted )
+  {
+    operator delete[](this->m_TeamMemsWanted);
+    this->m_TeamMemsWanted = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_ItemsWanted )
+  {
+    operator delete[](this->m_ItemsWanted);
+    this->m_ItemsWanted = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_PlayerWanted )
+  {
+    operator delete[](this->m_PlayerWanted);
+    this->m_PlayerWanted = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_MonsterWanted )
+  {
+    operator delete[](this->m_MonsterWanted);
+    this->m_MonsterWanted = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_pszSignature )
+  {
+    operator delete[](this->m_pszSignature);
+    this->m_pszSignature = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_pszExp )
+  {
+    operator delete[](this->m_pszExp);
+    this->m_pszExp = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_pExpArr )
+  {
+    operator delete[](this->m_pExpArr);
+    this->m_pExpArr = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_pTaskChar )
+  {
+    operator delete[](this->m_pTaskChar);
+    this->m_pTaskChar = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_pszPQExp )
+  {
+    operator delete[](this->m_pszPQExp);
+    this->m_pszPQExp = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_pPQExpArr )
+  {
+    operator delete[](this->m_pPQExpArr);
+    this->m_pPQExpArr = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_MonstersContrib )
+  {
+    operator delete[](this->m_MonstersContrib);
+    this->m_MonstersContrib = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_pDelvRegion )
+  {
+    operator delete[](this->m_pDelvRegion);
+    this->m_pDelvRegion = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_pEnterRegion )
+  {
+    operator delete[](this->m_pEnterRegion);
+    this->m_pEnterRegion = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_pLeaveRegion )
+  {
+    operator delete[](this->m_pLeaveRegion);
+    this->m_pLeaveRegion = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_pReachSite )
+  {
+    operator delete[](this->m_pReachSite);
+    this->m_pReachSite = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_pLeaveSite )
+  {
+    operator delete[](this->m_pLeaveSite);
+    this->m_pLeaveSite = 0;
+    ++g_ulDelCount;
+  }
+  if ( this->m_PremTitles )
+  {
+    operator delete[](this->m_PremTitles);
+    this->m_PremTitles = 0;
+    ++g_ulDelCount;
+  }
+  fread(this, 0x420u, 1u, fp);
+  convert_txt(this->m_szName, 30, this->m_ID);
+  v12 = (AWARD_DATA *)operator new(0x105u);
+  AWARD_DATA::AWARD_DATA(v12);
+  this->m_Award_S = v12;
+  ++g_ulNewCount;
+  v11 = (AWARD_DATA *)operator new(0x105u);
+  AWARD_DATA::AWARD_DATA(v11);
+  this->m_Award_F = v11;
+  ++g_ulNewCount;
+  v10 = (AWARD_RATIO_SCALE *)operator new(0x1Cu);
+  AWARD_RATIO_SCALE::AWARD_RATIO_SCALE(v10);
+  this->m_AwByRatio_S = v10;
+  ++g_ulNewCount;
+  v9 = (AWARD_RATIO_SCALE *)operator new(0x1Cu);
+  AWARD_RATIO_SCALE::AWARD_RATIO_SCALE(v9);
+  this->m_AwByRatio_F = v9;
+  ++g_ulNewCount;
+  v8 = (AWARD_ITEMS_SCALE *)operator new(0x20u);
+  AWARD_ITEMS_SCALE::AWARD_ITEMS_SCALE(v8);
+  this->m_AwByItems_S = v8;
+  ++g_ulNewCount;
+  v7 = (AWARD_ITEMS_SCALE *)operator new(0x20u);
+  AWARD_ITEMS_SCALE::AWARD_ITEMS_SCALE(v7);
+  this->m_AwByItems_F = v7;
+  ++g_ulNewCount;
+  this->m_tmStart = 0;
+  this->m_tmEnd = 0;
+  this->m_plChangeKey = 0;
+  this->m_plChangeKeyValue = 0;
+  this->m_pbChangeType = 0;
+  this->m_PremItems = 0;
+  this->m_GivenItems = 0;
+  this->m_TeamMemsWanted = 0;
+  this->m_ItemsWanted = 0;
+  this->m_PlayerWanted = 0;
+  this->m_MonsterWanted = 0;
+  this->m_pszSignature = 0;
+  this->m_pszExp = 0;
+  this->m_pExpArr = 0;
+  this->m_pTaskChar = 0;
+  this->m_pszPQExp = 0;
+  this->m_pPQExpArr = 0;
+  this->m_MonstersContrib = 0;
+  this->m_PremTitles = 0;
+  if ( this->m_bHasSign )
+  {
+    this->m_pszSignature = (task_char *)operator new[](0x3Cu);
+    ++g_ulNewCount;
+    fread(this->m_pszSignature, 2u, 0x1Eu, fp);
+    convert_txt(this->m_pszSignature, 30, this->m_ID);
+  }
+  if ( this->m_ulTimetable )
+  {
+    this->m_tmStart = (task_tm *)operator new[](24 * this->m_ulTimetable);
+    ++g_ulNewCount;
+    this->m_tmEnd = (task_tm *)operator new[](24 * this->m_ulTimetable);
+    ++g_ulNewCount;
+  }
+  for ( i = 0; i < this->m_ulTimetable; ++i )
+  {
+    fread(&this->m_tmStart[i], 0x18u, 1u, fp);
+    fread(&this->m_tmEnd[i], 0x18u, 1u, fp);
+  }
+  if ( this->m_ulChangeKeyCnt )
+  {
+    this->m_plChangeKey = (int *)operator new[](4 * this->m_ulChangeKeyCnt);
+    this->m_plChangeKeyValue = (int *)operator new[](4 * this->m_ulChangeKeyCnt);
+    this->m_pbChangeType = (bool *)operator new[](this->m_ulChangeKeyCnt);
+  }
+  for ( ia = 0; ia < this->m_ulChangeKeyCnt; ++ia )
+  {
+    fread(&this->m_plChangeKey[ia], 4u, 1u, fp);
+    fread(&this->m_plChangeKeyValue[ia], 4u, 1u, fp);
+    fread(&this->m_pbChangeType[ia], 1u, 1u, fp);
+  }
+  if ( this->m_ulPQExpCnt )
+  {
+    this->m_pszPQExp = (char (*)[64])operator new[](this->m_ulPQExpCnt << 6);
+    memset(this->m_pszPQExp, 0, this->m_ulPQExpCnt << 6);
+    this->m_pPQExpArr = (TASK_EXPRESSION (*)[64])operator new[](this->m_ulPQExpCnt << 9);
+    memset(this->m_pPQExpArr, 0, this->m_ulPQExpCnt << 9);
+    for ( ib = 0; ib < this->m_ulPQExpCnt; ++ib )
+    {
+      fread(this->m_pszPQExp[ib], 1u, 0x40u, fp);
+      fread(this->m_pPQExpArr[ib], 8u, 0x40u, fp);
+    }
+  }
+  if ( this->m_ulMonsterContribCnt )
+  {
+    this->m_MonstersContrib = (MONSTERS_CONTRIB *)operator new[](16 * this->m_ulMonsterContribCnt);
+    ++g_ulNewCount;
+  }
+  for ( ic = 0; ic < this->m_ulMonsterContribCnt; ++ic )
+    fread(&this->m_MonstersContrib[ic], 0x10u, 1u, fp);
+  if ( this->m_ulDelvRegionCnt )
+  {
+    this->m_pDelvRegion = (Task_Region *)operator new[](24 * this->m_ulDelvRegionCnt);
+    ++g_ulNewCount;
+  }
+  else
+  {
+    this->m_pDelvRegion = 0;
+  }
+  for ( id = 0; id < this->m_ulDelvRegionCnt; ++id )
+    fread(&this->m_pDelvRegion[id], 0x18u, 1u, fp);
+  if ( this->m_ulEnterRegionCnt )
+  {
+    this->m_pEnterRegion = (Task_Region *)operator new[](24 * this->m_ulEnterRegionCnt);
+    ++g_ulNewCount;
+  }
+  else
+  {
+    this->m_pEnterRegion = 0;
+  }
+  for ( ie = 0; ie < this->m_ulEnterRegionCnt; ++ie )
+    fread(&this->m_pEnterRegion[ie], 0x18u, 1u, fp);
+  if ( this->m_ulLeaveRegionCnt )
+  {
+    this->m_pLeaveRegion = (Task_Region *)operator new[](24 * this->m_ulLeaveRegionCnt);
+    ++g_ulNewCount;
+  }
+  else
+  {
+    this->m_pLeaveRegion = 0;
+  }
+  for ( ig = 0; ig < this->m_ulLeaveRegionCnt; ++ig )
+    fread(&this->m_pLeaveRegion[ig], 0x18u, 1u, fp);
+  if ( this->m_ulPremItems )
+  {
+    this->m_PremItems = (ITEM_WANTED *)operator new[](17 * this->m_ulPremItems);
+    ++g_ulNewCount;
+  }
+  for ( ih = 0; ih < this->m_ulPremItems; ++ih )
+    fread(&this->m_PremItems[ih], 0x11u, 1u, fp);
+  this->m_ulGivenCmnCount = 0;
+  this->m_ulGivenTskCount = 0;
+  if ( this->m_ulGivenItems )
+  {
+    this->m_GivenItems = (ITEM_WANTED *)operator new[](17 * this->m_ulGivenItems);
+    ++g_ulNewCount;
+  }
+  for ( ii = 0; ii < this->m_ulGivenItems; ++ii )
+  {
+    iwa = &this->m_GivenItems[ii];
+    fread(iwa, 0x11u, 1u, fp);
+    if ( iwa->m_bCommonItem )
+      ++this->m_ulGivenCmnCount;
+    else
+      ++this->m_ulGivenTskCount;
+  }
+  if ( this->m_bTeamwork )
+  {
+    if ( this->m_ulTeamMemsWanted )
+    {
+      m_ulTeamMemsWanted = this->m_ulTeamMemsWanted;
+      v6 = (TEAM_MEM_WANTED *)operator new[](36 * m_ulTeamMemsWanted);
+      v20 = v6;
+      t = (Task_Region *)(m_ulTeamMemsWanted - 1);
+      if ( m_ulTeamMemsWanted )
+      {
+        do
+        {
+          TEAM_MEM_WANTED::TEAM_MEM_WANTED(v20++);
+          t = (Task_Region *)((char *)t - 1);
+        }
+        while ( t != (Task_Region *)-1 );
+      }
+      this->m_TeamMemsWanted = v6;
+      ++g_ulNewCount;
+    }
+    for ( ij = 0; ij < this->m_ulTeamMemsWanted; ++ij )
+      fread(&this->m_TeamMemsWanted[ij], 0x24u, 1u, fp);
+  }
+  if ( this->m_iPremTitleNumTotal )
+  {
+    this->m_PremTitles = (int *)operator new[](4 * this->m_iPremTitleNumTotal);
+    ++g_ulNewCount;
+    for ( ik = 0; ik < this->m_iPremTitleNumTotal; ++ik )
+      fread(&this->m_PremTitles[ik], 4u, 1u, fp);
+  }
+  if ( this->m_ulMonsterWanted )
+  {
+    this->m_MonsterWanted = (MONSTER_WANTED *)operator new[](30 * this->m_ulMonsterWanted);
+    ++g_ulNewCount;
+  }
+  for ( il = 0; il < this->m_ulMonsterWanted; ++il )
+    fread(&this->m_MonsterWanted[il], 0x1Eu, 1u, fp);
+  if ( this->m_ulPlayerWanted )
+  {
+    m_ulPlayerWanted = this->m_ulPlayerWanted;
+    v5 = (PLAYER_WANTED *)operator new[](37 * m_ulPlayerWanted);
+    v21 = (TEAM_MEM_WANTED *)v5;
+    iw = (ITEM_WANTED *)(m_ulPlayerWanted - 1);
+    if ( m_ulPlayerWanted )
+    {
+      do
+      {
+        PLAYER_WANTED::PLAYER_WANTED((PLAYER_WANTED *const)v21);
+        v21 = (TEAM_MEM_WANTED *)((char *)v21 + 37);
+        iw = (ITEM_WANTED *)((char *)iw - 1);
+      }
+      while ( iw != (ITEM_WANTED *)-1 );
+    }
+    this->m_PlayerWanted = v5;
+    ++g_ulNewCount;
+  }
+  for ( im = 0; im < this->m_ulPlayerWanted; ++im )
+    fread(&this->m_PlayerWanted[im], 0x25u, 1u, fp);
+  if ( this->m_ulItemsWanted )
+  {
+    this->m_ItemsWanted = (ITEM_WANTED *)operator new[](17 * this->m_ulItemsWanted);
+    ++g_ulNewCount;
+  }
+  for ( in = 0; in < this->m_ulItemsWanted; ++in )
+    fread(&this->m_ItemsWanted[in], 0x11u, 1u, fp);
+  if ( this->m_ulExpCnt )
+  {
+    this->m_pszExp = (char (*)[64])operator new[](this->m_ulExpCnt << 6);
+    memset(this->m_pszExp, 0, this->m_ulExpCnt << 6);
+    this->m_pExpArr = (TASK_EXPRESSION (*)[64])operator new[](this->m_ulExpCnt << 9);
+    memset(this->m_pExpArr, 0, this->m_ulExpCnt << 9);
+    for ( io = 0; io < this->m_ulExpCnt; ++io )
+    {
+      fread(this->m_pszExp[io], 1u, 0x40u, fp);
+      fread(this->m_pExpArr[io], 8u, 0x40u, fp);
+    }
+  }
+  if ( this->m_ulTaskCharCnt )
+  {
+    this->m_pTaskChar = (task_char (*)[64])operator new[](this->m_ulTaskCharCnt << 7);
+    memset(this->m_pTaskChar, 0, this->m_ulTaskCharCnt << 7);
+    for ( ip = 0; ip < this->m_ulTaskCharCnt; ++ip )
+      fread(this->m_pTaskChar[ip], 2u, 0x40u, fp);
+  }
+  if ( this->m_ulReachSiteCnt )
+  {
+    this->m_pReachSite = (Task_Region *)operator new[](24 * this->m_ulReachSiteCnt);
+    ++g_ulNewCount;
+  }
+  else
+  {
+    this->m_pReachSite = 0;
+  }
+  for ( iq = 0; iq < this->m_ulReachSiteCnt; ++iq )
+    fread(&this->m_pReachSite[iq], 0x18u, 1u, fp);
+  if ( this->m_ulLeaveSiteCnt )
+  {
+    this->m_pLeaveSite = (Task_Region *)operator new[](24 * this->m_ulLeaveSiteCnt);
+    ++g_ulNewCount;
+  }
+  else
+  {
+    this->m_pLeaveSite = 0;
+  }
+  for ( ir = 0; ir < this->m_ulLeaveSiteCnt; ++ir )
+    fread(&this->m_pLeaveSite[ir], 0x18u, 1u, fp);
+  LoadAwardDataBin(fp, this->m_Award_S, task_templ_cur_version);
+  LoadAwardDataBin(fp, this->m_Award_F, task_templ_cur_version);
+  LoadAwardDataRatioScale(fp, this->m_AwByRatio_S, task_templ_cur_version);
+  LoadAwardDataRatioScale(fp, this->m_AwByRatio_F, task_templ_cur_version);
+  LoadAwardDataItemsScale(fp, this->m_AwByItems_S, task_templ_cur_version);
+  LoadAwardDataItemsScale(fp, this->m_AwByItems_F, task_templ_cur_version);
+  return 1;
+}

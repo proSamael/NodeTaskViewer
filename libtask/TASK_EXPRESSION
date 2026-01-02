@@ -1,0 +1,5 @@
+00000000 struct TASK_EXPRESSION // sizeof=0x8
+00000000 {
+00000000     int type;
+00000004     float value;
+00000008 };

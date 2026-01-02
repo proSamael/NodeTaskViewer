@@ -1,0 +1,20 @@
+void __cdecl ATaskTempl::CheckMask(ATaskTempl *const this)
+{
+  switch ( this->m_enumMethod )
+  {
+    case 1u:
+      this->m_ulMask = 1;
+      break;
+    case 2u:
+      this->m_ulMask = 2;
+      break;
+    case 3u:
+      this->m_ulMask = 4;
+      break;
+    case 0xDu:
+      this->m_ulMask = 128;
+      break;
+  }
+  if ( this->m_bPQSubTask )
+    this->m_ulMask = 64;
+}

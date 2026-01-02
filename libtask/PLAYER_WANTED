@@ -1,0 +1,18 @@
+00000000 struct __attribute__((packed)) __attribute__((aligned(1))) PLAYER_WANTED // sizeof=0x25
+00000000 {
+00000000     unsigned int m_ulPlayerNum;
+00000004     unsigned int m_ulDropItemId;
+00000008     unsigned int m_ulDropItemCount;
+0000000C     bool m_bDropCmnItem;
+0000000D     float m_fDropProb;
+00000011     Kill_Player_Requirements m_Requirements;
+00000025 };
+
+00000000 struct __cppobj Kill_Player_Requirements // sizeof=0x14
+00000000 {                                       // XREF: PLAYER_WANTED/r
+00000000     unsigned int m_ulOccupations;
+00000004     int m_iMinLevel;
+00000008     int m_iMaxLevel;
+0000000C     int m_iGender;
+00000010     int m_iForce;
+00000014 };

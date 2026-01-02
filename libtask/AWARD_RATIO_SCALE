@@ -1,0 +1,6 @@
+00000000 struct __cppobj AWARD_RATIO_SCALE // sizeof=0x1C
+00000000 {
+00000000     unsigned int m_ulScales;
+00000004     float m_Ratios[5];
+00000018     AWARD_DATA *m_Awards;
+0000001C };

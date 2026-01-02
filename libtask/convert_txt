@@ -1,0 +1,7 @@
+void __cdecl convert_txt(namechar *str, int len, namechar code)
+{
+  int i; // [esp+0h] [ebp-10h]
+
+  for ( i = 0; i < len; ++i )
+    str[i] ^= code;
+}

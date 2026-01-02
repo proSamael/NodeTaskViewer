@@ -1,0 +1,5 @@
+00000000 struct Task_Region // sizeof=0x18
+00000000 {                                       // XREF: _ZN19ATaskTemplFixedData25LoadFixedDataFromTextFileEP8_IO_FILEm/r
+00000000     ZONE_VERT zvMin;
+0000000C     ZONE_VERT zvMax;
+00000018 };

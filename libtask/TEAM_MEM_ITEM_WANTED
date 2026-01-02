@@ -1,0 +1,6 @@
+00000000 struct __attribute__((packed)) __attribute__((aligned(1))) TEAM_MEM_ITEM_WANTED // sizeof=0x9
+00000000 {
+00000000     unsigned int m_ulItemTemplId;
+00000004     bool m_bCommonItem;
+00000005     unsigned int m_ulItemNum;
+00000009 };

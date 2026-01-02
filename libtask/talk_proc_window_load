@@ -1,0 +1,12 @@
+int __cdecl talk_proc::window::load(talk_proc::window *const this, FILE *fp)
+{
+  fread(this, 4u, 1u, fp);
+  fread(&this->id_parent, 4u, 1u, fp);
+  fread(&this->talk_text_len, 4u, 1u, fp);
+  this->talk_text = (namechar *)operator new[](2 * this->talk_text_len);
+  fread(this->talk_text, 2u, this->talk_text_len, fp);
+  fread(&this->num_option, 4u, 1u, fp);
+  this->options = (talk_proc::option *)operator new[](136 * this->num_option);
+  fread(this->options, 0x88u, this->num_option, fp);
+  return 0;
+}

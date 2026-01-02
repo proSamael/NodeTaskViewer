@@ -1,0 +1,10 @@
+00000000 struct task_tm // sizeof=0x18
+00000000 {                                       // XREF: ATaskTemplFixedData/r
+00000000                                         // ATaskTemplFixedData/r
+00000000     int year;
+00000004     int month;
+00000008     int day;
+0000000C     int hour;
+00000010     int min;
+00000014     int wday;
+00000018 };

@@ -1,0 +1,4 @@
+00000000 union ZONE_VERT::$4B57C441A54F9824403753038007E9BC // sizeof=0xC
+00000000 {                                       // XREF: ZONE_VERT/r
+00000000     float v[3];
+00000000 };

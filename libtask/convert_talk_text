@@ -1,0 +1,15 @@
+void __cdecl convert_talk_text(talk_proc *talk, namechar code)
+{
+  talk_proc::window *win; // [esp+4h] [ebp-14h]
+  int j; // [esp+8h] [ebp-10h]
+  int i; // [esp+Ch] [ebp-Ch]
+
+  convert_txt(talk->text, 64, code);
+  for ( i = 0; i < talk->num_window; ++i )
+  {
+    win = &talk->windows[i];
+    convert_txt(win->talk_text, win->talk_text_len, code);
+    for ( j = 0; j < win->num_option; ++j )
+      convert_txt(win->options[j].text, 64, code);
+  }
+}

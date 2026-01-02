@@ -1,0 +1,12 @@
+00000000 struct __attribute__((packed)) __attribute__((aligned(2))) MONSTER_WANTED // sizeof=0x1E
+00000000 {
+00000000     unsigned int m_ulMonsterTemplId;
+00000004     unsigned int m_ulMonsterNum;
+00000008     unsigned int m_ulDropItemId;
+0000000C     unsigned int m_ulDropItemCount;
+00000010     bool m_bDropCmnItem;
+00000011     float m_fDropProb;
+00000015     bool m_bKillerLev;
+00000016     int m_iDPH;
+0000001A     int m_iDPS;
+0000001E };

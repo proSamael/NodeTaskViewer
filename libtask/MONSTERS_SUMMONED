@@ -1,0 +1,7 @@
+00000000 struct MONSTERS_SUMMONED // sizeof=0x10
+00000000 {
+00000000     unsigned int m_ulMonsterTemplId;
+00000004     unsigned int m_ulMonsterNum;
+00000008     float m_fSummonProb;
+0000000C     int m_lPeriod;
+00000010 };

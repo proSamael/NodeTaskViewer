@@ -1,0 +1,32 @@
+int __cdecl talk_proc::load(talk_proc *const this, FILE *fp)
+{
+  int num_window; // esi
+  int *v3; // eax
+  talk_proc::window *v5; // [esp+Ch] [ebp-1Ch]
+  int i; // [esp+14h] [ebp-14h]
+  int ia; // [esp+14h] [ebp-14h]
+  talk_proc::window *v8; // [esp+18h] [ebp-10h]
+
+  fread(&this->id_talk, 4u, 1u, fp);
+  fread(this, 0x80u, 1u, fp);
+  fread(&this->num_window, 4u, 1u, fp);
+  num_window = this->num_window;
+  v3 = (int *)operator new[](24 * num_window + 4);
+  v5 = (talk_proc::window *)(v3 + 1);
+  *v3 = num_window;
+  v8 = (talk_proc::window *)(v3 + 1);
+  i = num_window - 1;
+  if ( num_window )
+  {
+    do
+    {
+      talk_proc::window::window(v8++);
+      --i;
+    }
+    while ( i != -1 );
+  }
+  this->windows = v5;
+  for ( ia = 0; ia < this->num_window; ++ia )
+    talk_proc::window::load(&this->windows[ia], fp);
+  return 0;
+}

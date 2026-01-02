@@ -1,0 +1,6 @@
+00000000 struct __cppobj __attribute__((packed)) __attribute__((aligned(1))) AWARD_PQ_RANKING // sizeof=0x9
+00000000 {
+00000000     bool m_bAwardByProf;
+00000001     unsigned int m_ulRankingAwardNum;
+00000005     RANKING_AWARD *m_RankingAward;
+00000009 };

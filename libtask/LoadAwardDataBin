@@ -1,0 +1,273 @@
+bool __cdecl LoadAwardDataBin(FILE *fp, AWARD_DATA *const ad, unsigned int ulVersion)
+{
+  unsigned int *v3; // eax
+  unsigned int m_ulTitleNum; // esi
+  AWARD_PQ_RANKING *v6; // [esp+14h] [ebp-64h]
+  AWARD_MONSTERS_SUMMONED *v7; // [esp+24h] [ebp-54h]
+  TITLE_AWARD *v8; // [esp+2Ch] [ebp-4Ch]
+  unsigned int m_ulCandItems; // [esp+48h] [ebp-30h]
+  AWARD_ITEMS_CAND *v10; // [esp+4Ch] [ebp-2Ch]
+  AWARD_PQ_RANKING *m_PQRankingAward; // [esp+54h] [ebp-24h]
+  AWARD_MONSTERS_SUMMONED *m_SummonedMonsters; // [esp+58h] [ebp-20h]
+  AWARD_ITEMS_CAND *j; // [esp+5Ch] [ebp-1Ch]
+  unsigned int v14; // [esp+60h] [ebp-18h]
+  AWARD_ITEMS_CAND *v15; // [esp+64h] [ebp-14h]
+  AWARD_ITEMS_CAND *v16; // [esp+64h] [ebp-14h]
+  unsigned int v17; // [esp+68h] [ebp-10h]
+  unsigned int i; // [esp+6Ch] [ebp-Ch]
+  unsigned int ia; // [esp+6Ch] [ebp-Ch]
+  unsigned int ib; // [esp+6Ch] [ebp-Ch]
+  unsigned int ic; // [esp+6Ch] [ebp-Ch]
+  unsigned int id; // [esp+6Ch] [ebp-Ch]
+  unsigned int ie; // [esp+6Ch] [ebp-Ch]
+  unsigned int ig; // [esp+6Ch] [ebp-Ch]
+
+  if ( ad->m_CandItems )
+  {
+    for ( j = &ad->m_CandItems[*(int *)((char *)&ad->m_CandItems[-1].m_AwardItems + 1)];
+          ad->m_CandItems != j;
+          AWARD_ITEMS_CAND::~AWARD_ITEMS_CAND(j) )
+    {
+      --j;
+    }
+    operator delete[]((char *)&ad->m_CandItems[-1].m_AwardItems + 1);
+    ad->m_CandItems = 0;
+    ++g_ulDelCount;
+  }
+  ad->m_CandItems = 0;
+  if ( ad->m_pTitleAward )
+  {
+    operator delete[](ad->m_pTitleAward);
+    ad->m_pTitleAward = 0;
+    ++g_ulDelCount;
+  }
+  ad->m_pTitleAward = 0;
+  if ( ad->m_SummonedMonsters )
+  {
+    m_SummonedMonsters = ad->m_SummonedMonsters;
+    if ( m_SummonedMonsters )
+    {
+      AWARD_MONSTERS_SUMMONED::~AWARD_MONSTERS_SUMMONED(m_SummonedMonsters);
+      operator delete(m_SummonedMonsters);
+    }
+    ad->m_SummonedMonsters = 0;
+    ++g_ulDelCount;
+  }
+  ad->m_SummonedMonsters = 0;
+  if ( ad->m_PQRankingAward )
+  {
+    m_PQRankingAward = ad->m_PQRankingAward;
+    if ( m_PQRankingAward )
+    {
+      AWARD_PQ_RANKING::~AWARD_PQ_RANKING(m_PQRankingAward);
+      operator delete(m_PQRankingAward);
+    }
+    ad->m_PQRankingAward = 0;
+    ++g_ulDelCount;
+  }
+  ad->m_PQRankingAward = 0;
+  if ( ad->m_plChangeKey )
+  {
+    operator delete[](ad->m_plChangeKey);
+    ad->m_plChangeKey = 0;
+    ++g_ulDelCount;
+  }
+  ad->m_plChangeKey = 0;
+  if ( ad->m_plChangeKeyValue )
+  {
+    operator delete[](ad->m_plChangeKeyValue);
+    ad->m_plChangeKeyValue = 0;
+    ++g_ulDelCount;
+  }
+  ad->m_plChangeKeyValue = 0;
+  if ( ad->m_pbChangeType )
+  {
+    operator delete[](ad->m_pbChangeType);
+    ad->m_pbChangeType = 0;
+    ++g_ulDelCount;
+  }
+  ad->m_pbChangeType = 0;
+  if ( ad->m_plHistoryChangeKey )
+  {
+    operator delete[](ad->m_plHistoryChangeKey);
+    ad->m_plHistoryChangeKey = 0;
+    ++g_ulDelCount;
+  }
+  ad->m_plHistoryChangeKey = 0;
+  if ( ad->m_plHistoryChangeKeyValue )
+  {
+    operator delete[](ad->m_plHistoryChangeKeyValue);
+    ad->m_plHistoryChangeKeyValue = 0;
+    ++g_ulDelCount;
+  }
+  ad->m_plHistoryChangeKeyValue = 0;
+  if ( ad->m_pbHistoryChangeType )
+  {
+    operator delete[](ad->m_pbHistoryChangeType);
+    ad->m_pbHistoryChangeType = 0;
+    ++g_ulDelCount;
+  }
+  ad->m_pbHistoryChangeType = 0;
+  if ( ad->m_plDisplayKey )
+  {
+    operator delete[](ad->m_plDisplayKey);
+    ad->m_plDisplayKey = 0;
+    ++g_ulDelCount;
+  }
+  ad->m_plDisplayKey = 0;
+  if ( ad->m_pszExp )
+  {
+    operator delete[](ad->m_pszExp);
+    ad->m_pszExp = 0;
+    ++g_ulDelCount;
+  }
+  ad->m_pszExp = 0;
+  if ( ad->m_pExpArr )
+  {
+    operator delete[](ad->m_pExpArr);
+    ad->m_pExpArr = 0;
+    ++g_ulDelCount;
+  }
+  ad->m_pExpArr = 0;
+  if ( ad->m_pTaskChar )
+  {
+    operator delete[](ad->m_pTaskChar);
+    ad->m_pTaskChar = 0;
+    ++g_ulDelCount;
+  }
+  ad->m_pTaskChar = 0;
+  fread(ad, 0x105u, 1u, fp);
+  if ( ad->m_ulCandItems )
+  {
+    m_ulCandItems = ad->m_ulCandItems;
+    v3 = (unsigned int *)operator new[](17 * m_ulCandItems + 4);
+    v10 = (AWARD_ITEMS_CAND *)(v3 + 1);
+    *v3 = m_ulCandItems;
+    v15 = (AWARD_ITEMS_CAND *)(v3 + 1);
+    v14 = m_ulCandItems - 1;
+    if ( m_ulCandItems )
+    {
+      do
+      {
+        AWARD_ITEMS_CAND::AWARD_ITEMS_CAND(v15++);
+        --v14;
+      }
+      while ( v14 != -1 );
+    }
+    ad->m_CandItems = v10;
+    ++g_ulNewCount;
+  }
+  else
+  {
+    ad->m_CandItems = 0;
+  }
+  if ( ad->m_ulTitleNum )
+  {
+    m_ulTitleNum = ad->m_ulTitleNum;
+    v8 = (TITLE_AWARD *)operator new[](8 * m_ulTitleNum);
+    v16 = (AWARD_ITEMS_CAND *)v8;
+    v17 = m_ulTitleNum - 1;
+    if ( m_ulTitleNum )
+    {
+      do
+      {
+        TITLE_AWARD::TITLE_AWARD((TITLE_AWARD *const)v16);
+        v16 = (AWARD_ITEMS_CAND *)((char *)v16 + 8);
+        --v17;
+      }
+      while ( v17 != -1 );
+    }
+    ad->m_pTitleAward = v8;
+    ++g_ulNewCount;
+  }
+  else
+  {
+    ad->m_pTitleAward = 0;
+  }
+  if ( ad->m_ulSummonedMonsters )
+  {
+    v7 = (AWARD_MONSTERS_SUMMONED *)operator new(0xEu);
+    AWARD_MONSTERS_SUMMONED::AWARD_MONSTERS_SUMMONED(v7);
+    ad->m_SummonedMonsters = v7;
+    ++g_ulNewCount;
+  }
+  else
+  {
+    ad->m_SummonedMonsters = 0;
+  }
+  if ( ad->m_ulPQRankingAwardCnt )
+  {
+    v6 = (AWARD_PQ_RANKING *)operator new(9u);
+    AWARD_PQ_RANKING::AWARD_PQ_RANKING(v6);
+    ad->m_PQRankingAward = v6;
+    ++g_ulNewCount;
+  }
+  else
+  {
+    ad->m_PQRankingAward = 0;
+  }
+  for ( i = 0; i < ad->m_ulCandItems; ++i )
+    LoadAwardCandBin(fp, &ad->m_CandItems[i], ulVersion);
+  if ( ad->m_ulSummonedMonsters )
+  {
+    ad->m_SummonedMonsters->m_ulMonsterNum = ad->m_ulSummonedMonsters;
+    LoadAwardMonstersBin(fp, ad->m_SummonedMonsters, ulVersion);
+  }
+  if ( ad->m_ulPQRankingAwardCnt )
+  {
+    ad->m_PQRankingAward->m_ulRankingAwardNum = ad->m_ulPQRankingAwardCnt;
+    LoadAwardPQRankingBin(fp, ad->m_PQRankingAward, ulVersion);
+  }
+  for ( ia = 0; ia < ad->m_ulTitleNum; ++ia )
+    fread(&ad->m_pTitleAward[ia], 8u, 1u, fp);
+  if ( ad->m_ulChangeKeyCnt )
+  {
+    ad->m_plChangeKey = (int *)operator new[](4 * ad->m_ulChangeKeyCnt);
+    ad->m_plChangeKeyValue = (int *)operator new[](4 * ad->m_ulChangeKeyCnt);
+    ad->m_pbChangeType = (bool *)operator new[](ad->m_ulChangeKeyCnt);
+  }
+  for ( ib = 0; ib < ad->m_ulChangeKeyCnt; ++ib )
+  {
+    fread(&ad->m_plChangeKey[ib], 4u, 1u, fp);
+    fread(&ad->m_plChangeKeyValue[ib], 4u, 1u, fp);
+    fread(&ad->m_pbChangeType[ib], 1u, 1u, fp);
+  }
+  if ( ad->m_ulHistoryChangeCnt )
+  {
+    ad->m_plHistoryChangeKey = (int *)operator new[](4 * ad->m_ulHistoryChangeCnt);
+    ad->m_plHistoryChangeKeyValue = (int *)operator new[](4 * ad->m_ulHistoryChangeCnt);
+    ad->m_pbHistoryChangeType = (bool *)operator new[](ad->m_ulHistoryChangeCnt);
+  }
+  for ( ic = 0; ic < ad->m_ulHistoryChangeCnt; ++ic )
+  {
+    fread(&ad->m_plHistoryChangeKey[ic], 4u, 1u, fp);
+    fread(&ad->m_plHistoryChangeKeyValue[ic], 4u, 1u, fp);
+    fread(&ad->m_pbHistoryChangeType[ic], 1u, 1u, fp);
+  }
+  if ( ad->m_ulDisplayKeyCnt )
+  {
+    ad->m_plDisplayKey = (int *)operator new[](4 * ad->m_ulDisplayKeyCnt);
+    for ( id = 0; id < ad->m_ulDisplayKeyCnt; ++id )
+      fread(&ad->m_plDisplayKey[id], 4u, 1u, fp);
+  }
+  if ( ad->m_ulExpCnt )
+  {
+    ad->m_pszExp = (char (*)[64])operator new[](ad->m_ulExpCnt << 6);
+    memset(ad->m_pszExp, 0, ad->m_ulExpCnt << 6);
+    ad->m_pExpArr = (TASK_EXPRESSION (*)[64])operator new[](ad->m_ulExpCnt << 9);
+    memset(ad->m_pExpArr, 0, ad->m_ulExpCnt << 9);
+    for ( ie = 0; ie < ad->m_ulExpCnt; ++ie )
+    {
+      fread(ad->m_pszExp[ie], 1u, 0x40u, fp);
+      fread(ad->m_pExpArr[ie], 8u, 0x40u, fp);
+    }
+  }
+  if ( ad->m_ulTaskCharCnt )
+  {
+    ad->m_pTaskChar = (task_char (*)[64])operator new[](ad->m_ulTaskCharCnt << 7);
+    memset(ad->m_pTaskChar, 0, ad->m_ulTaskCharCnt << 7);
+    for ( ig = 0; ig < ad->m_ulTaskCharCnt; ++ig )
+      fread(ad->m_pTaskChar[ig], 2u, 0x40u, fp);
+  }
+  return 1;
+}

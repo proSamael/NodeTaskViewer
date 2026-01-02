@@ -1,0 +1,7 @@
+00000000 struct __cppobj AWARD_ITEMS_SCALE // sizeof=0x20
+00000000 {
+00000000     unsigned int m_ulScales;
+00000004     unsigned int m_ulItemId;
+00000008     unsigned int m_Counts[5];
+0000001C     AWARD_DATA *m_Awards;
+00000020 };

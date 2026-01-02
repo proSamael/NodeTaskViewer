@@ -1,0 +1,16 @@
+bool __cdecl ATaskTempl::LoadTributeBin(ATaskTempl *const this, FILE *fp)
+{
+  size_t len[3]; // [esp+Ch] [ebp-Ch] BYREF
+
+  len[0] = 0;
+  fread(len, 4u, 1u, fp);
+  this->m_pwstrTribute = (task_char *)operator new[](2 * (len[0] + 1));
+  this->m_pwstrTribute[len[0]] = 0;
+  if ( len[0] )
+  {
+    fread(this->m_pwstrTribute, 2u, len[0], fp);
+    convert_txt(this->m_pwstrTribute, len[0], this->m_ID);
+  }
+  ++g_ulNewCount;
+  return 1;
+}

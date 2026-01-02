@@ -1,0 +1,5 @@
+00000000 struct __cppobj TITLE_AWARD // sizeof=0x8
+00000000 {
+00000000     unsigned int m_ulTitleID;
+00000004     int m_lPeriod;
+00000008 };

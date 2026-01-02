@@ -1,0 +1,70 @@
+bool __cdecl ATaskTempl::LoadFromBinFile(ATaskTempl *const this, FILE *fp)
+{
+  ATaskTempl::LoadBinary(this, fp);
+  ATaskTempl::CheckDepth(this);
+  return 1;
+}
+
+
+bool __cdecl ATaskTempl::LoadBinary(ATaskTempl *const this, FILE *fp)
+{
+  ATaskTempl *v3; // [esp+14h] [ebp-14h]
+  int i; // [esp+1Ch] [ebp-Ch]
+  namechar code; // [esp+22h] [ebp-6h]
+
+  ATaskTemplFixedData::LoadFixedDataFromBinFile(&this->ATaskTemplFixedData, fp);
+  ATaskTempl::LoadDescriptionBin(this, fp);
+  ATaskTempl::LoadTributeBin(this, fp);
+  ATaskTempl::CheckMask(this);
+  code = this->m_ID;
+  talk_proc::load(&this->m_DelvTaskTalk, fp);
+  convert_talk_text(&this->m_DelvTaskTalk, code);
+  talk_proc::load(&this->m_UnqualifiedTalk, fp);
+  convert_talk_text(&this->m_UnqualifiedTalk, code);
+  talk_proc::load(&this->m_DelvItemTalk, fp);
+  convert_talk_text(&this->m_DelvItemTalk, code);
+  talk_proc::load(&this->m_ExeTalk, fp);
+  convert_talk_text(&this->m_ExeTalk, code);
+  talk_proc::load(&this->m_AwardTalk, fp);
+  convert_talk_text(&this->m_AwardTalk, code);
+  fread(&this->m_nSubCount, 4u, 1u, fp);
+  for ( i = 0; i < this->m_nSubCount; ++i )
+  {
+    v3 = (ATaskTempl *)operator new(0x818u);
+    ATaskTempl::ATaskTempl(v3);
+    ++g_ulNewCount;
+    ATaskTempl::AddSubTaskTempl(this, v3);
+    ATaskTempl::LoadBinary(v3, fp);
+  }
+  ATaskTempl::SynchID(this);
+  return 1;
+}
+
+
+void __cdecl ATaskTempl::CheckDepth(ATaskTempl *const this)
+{
+  char v1; // [esp+1h] [ebp-Bh]
+  unsigned __int8 uDepth; // [esp+3h] [ebp-9h]
+  ATaskTempl *pChild; // [esp+4h] [ebp-8h]
+
+  pChild = this->m_pFirstChild;
+  uDepth = 0;
+  v1 = 0;
+  if ( this->m_bExeChildInOrder || this->m_bChooseOne || this->m_bRandOne )
+    v1 = 1;
+  while ( pChild )
+  {
+    ATaskTempl::CheckDepth(pChild);
+    if ( v1 )
+    {
+      if ( uDepth < pChild->m_uDepth )
+        uDepth = pChild->m_uDepth;
+    }
+    else
+    {
+      uDepth += pChild->m_uDepth;
+    }
+    pChild = pChild->m_pNextSibling;
+  }
+  this->m_uDepth += uDepth;
+}

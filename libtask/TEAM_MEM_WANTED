@@ -1,0 +1,12 @@
+00000000 struct __cppobj TEAM_MEM_WANTED // sizeof=0x24
+00000000 {
+00000000     unsigned int m_ulLevelMin;
+00000004     unsigned int m_ulLevelMax;
+00000008     unsigned int m_ulRace;
+0000000C     unsigned int m_ulOccupation;
+00000010     unsigned int m_ulGender;
+00000014     unsigned int m_ulMinCount;
+00000018     unsigned int m_ulMaxCount;
+0000001C     unsigned int m_ulTask;
+00000020     int m_iForce;
+00000024 };

@@ -1,0 +1,33 @@
+bool __cdecl LoadAwardCandBin(FILE *fp, AWARD_ITEMS_CAND *const ic, unsigned int ulVersion)
+{
+  ITEM_WANTED *iw; // [esp+8h] [ebp-10h]
+  unsigned int i; // [esp+Ch] [ebp-Ch]
+
+  ic->m_ulAwardItems = 0;
+  ic->m_ulAwardCmnItems = 0;
+  ic->m_ulAwardTskItems = 0;
+  fread(&ic->m_bRandChoose, 1u, 1u, fp);
+  fread(ic, 4u, 1u, fp);
+  if ( ic->m_AwardItems )
+  {
+    operator delete[](ic->m_AwardItems);
+    ic->m_AwardItems = 0;
+    ++g_ulDelCount;
+  }
+  ic->m_AwardItems = 0;
+  if ( ic->m_ulAwardItems )
+  {
+    ic->m_AwardItems = (ITEM_WANTED *)operator new[](17 * ic->m_ulAwardItems);
+    ++g_ulNewCount;
+  }
+  for ( i = 0; i < ic->m_ulAwardItems; ++i )
+  {
+    iw = &ic->m_AwardItems[i];
+    fread(iw, 0x11u, 1u, fp);
+    if ( iw->m_bCommonItem )
+      ++ic->m_ulAwardCmnItems;
+    else
+      ++ic->m_ulAwardTskItems;
+  }
+  return 1;
+}

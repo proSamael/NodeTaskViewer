@@ -1,0 +1,8 @@
+00000000 struct __attribute__((packed)) __attribute__((aligned(1))) ITEM_WANTED // sizeof=0x11
+00000000 {                                       // XREF: _ZNK10ATaskTempl18DeliverByAwardDataEP13TaskInterfaceP14ActiveTaskListP15ActiveTaskEntryPK10AWARD_DATAmi/r
+00000000     unsigned int m_ulItemTemplId;       // XREF: ATaskTempl::DeliverByAwardData(TaskInterface *,ActiveTaskList *,ActiveTaskEntry *,AWARD_DATA const*,ulong,int)+CE7/w
+00000004     bool m_bCommonItem;                 // XREF: ATaskTempl::DeliverByAwardData(TaskInterface *,ActiveTaskList *,ActiveTaskEntry *,AWARD_DATA const*,ulong,int)+D05/w
+00000005     unsigned int m_ulItemNum;           // XREF: ATaskTempl::DeliverByAwardData(TaskInterface *,ActiveTaskList *,ActiveTaskEntry *,AWARD_DATA const*,ulong,int)+CF6/w
+00000009     float m_fProb;
+0000000D     int m_lPeriod;                      // XREF: ATaskTempl::DeliverByAwardData(TaskInterface *,ActiveTaskList *,ActiveTaskEntry *,AWARD_DATA const*,ulong,int)+D14/w
+00000011 };

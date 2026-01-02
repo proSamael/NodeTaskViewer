@@ -1,0 +1,45 @@
+bool __cdecl LoadAwardDataRatioScale(FILE *fp, AWARD_RATIO_SCALE *const ad, unsigned int ulVersion)
+{
+  unsigned int m_ulScales; // esi
+  unsigned int *v4; // eax
+  AWARD_DATA *v6; // [esp+8h] [ebp-20h]
+  AWARD_DATA *j; // [esp+10h] [ebp-18h]
+  unsigned int i; // [esp+14h] [ebp-14h]
+  unsigned int ia; // [esp+14h] [ebp-14h]
+  AWARD_DATA *v10; // [esp+18h] [ebp-10h]
+
+  fread(ad, 4u, 1u, fp);
+  fread(ad->m_Ratios, 0x14u, 1u, fp);
+  if ( ad->m_Awards )
+  {
+    for ( j = &ad->m_Awards[ad->m_Awards[-1].m_iLeaderShip]; ad->m_Awards != j; AWARD_DATA::~AWARD_DATA(j) )
+      --j;
+    operator delete[](&ad->m_Awards[-1].m_iLeaderShip);
+    ad->m_Awards = 0;
+    ++g_ulDelCount;
+  }
+  ad->m_Awards = 0;
+  if ( ad->m_ulScales )
+  {
+    m_ulScales = ad->m_ulScales;
+    v4 = (unsigned int *)operator new[](261 * ad->m_ulScales + 4);
+    v6 = (AWARD_DATA *)(v4 + 1);
+    *v4 = m_ulScales;
+    v10 = (AWARD_DATA *)(v4 + 1);
+    i = m_ulScales - 1;
+    if ( m_ulScales )
+    {
+      do
+      {
+        AWARD_DATA::AWARD_DATA(v10++);
+        --i;
+      }
+      while ( i != -1 );
+    }
+    ad->m_Awards = v6;
+    ++g_ulNewCount;
+  }
+  for ( ia = 0; ia < ad->m_ulScales; ++ia )
+    LoadAwardDataBin(fp, &ad->m_Awards[ia], ulVersion);
+  return 1;
+}

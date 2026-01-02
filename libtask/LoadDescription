@@ -1,0 +1,43 @@
+bool __cdecl ATaskTempl::LoadDescription(ATaskTempl *const this, FILE *fp)
+{
+  char line[284]; // [esp+10h] [ebp-128h] BYREF
+  size_t len; // [esp+12Ch] [ebp-Ch] BYREF
+
+  len = 0;
+  if ( !ReadLine(fp, line) )
+    return 0;
+  sscanf(line, "DescriptLen: %u", &len);
+  this->m_pwstrDescript = (task_char *)operator new[](2 * (len + 1));
+  this->m_pwstrDescript[len] = 0;
+  ++g_ulNewCount;
+  if ( len )
+  {
+    fread(this->m_pwstrDescript, 2u, len, fp);
+    ReadLine(fp, line);
+  }
+  len = 0;
+  if ( !ReadLine(fp, line) )
+    return 0;
+  sscanf(line, "DescriptLen: %u", &len);
+  this->m_pwstrOkText = (task_char *)operator new[](2 * (len + 1));
+  this->m_pwstrOkText[len] = 0;
+  ++g_ulNewCount;
+  if ( len )
+  {
+    fread(this->m_pwstrOkText, 2u, len, fp);
+    ReadLine(fp, line);
+  }
+  len = 0;
+  if ( !ReadLine(fp, line) )
+    return 0;
+  sscanf(line, "DescriptLen: %u", &len);
+  this->m_pwstrNoText = (task_char *)operator new[](2 * (len + 1));
+  this->m_pwstrNoText[len] = 0;
+  ++g_ulNewCount;
+  if ( len )
+  {
+    fread(this->m_pwstrNoText, 2u, len, fp);
+    ReadLine(fp, line);
+  }
+  return 1;
+}

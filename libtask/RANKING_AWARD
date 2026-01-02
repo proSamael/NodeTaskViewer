@@ -1,0 +1,9 @@
+00000000 struct __attribute__((packed)) __attribute__((aligned(1))) RANKING_AWARD // sizeof=0x15
+00000000 {
+00000000     unsigned int m_iRankingStart;
+00000004     unsigned int m_iRankingEnd;
+00000008     bool m_bCommonItem;
+00000009     unsigned int m_ulAwardItemId;
+0000000D     unsigned int m_ulAwardItemNum;
+00000011     int m_lPeriod;
+00000015 };

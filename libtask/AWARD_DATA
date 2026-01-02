@@ -1,0 +1,75 @@
+00000000 struct __cppobj __attribute__((packed)) __attribute__((aligned(1))) AWARD_DATA // sizeof=0x105
+00000000 {                                       // XREF: _ZNK10ATaskTempl18RecursiveCalcAwardEP13TaskInterfaceP14ActiveTaskListP15ActiveTaskEntrymiRmS6_S6_RhRl/r
+00000000     unsigned int m_ulGoldNum;
+00000004     unsigned int m_ulExp;
+00000008     unsigned int m_ulRealmExp;
+0000000C     bool m_bExpandRealmLevelMax;
+0000000D     unsigned int m_ulNewTask;           // XREF: ATaskTempl::RecursiveCalcAward(TaskInterface *,ActiveTaskList *,ActiveTaskEntry *,ulong,int,ulong &,ulong &,ulong &,uchar &,long &):loc_13417/r
+0000000D                                         // ATaskTempl::RecursiveCalcAward(TaskInterface *,ActiveTaskList *,ActiveTaskEntry *,ulong,int,ulong &,ulong &,ulong &,uchar &,long &)+18B/r
+00000011     unsigned int m_ulSP;
+00000015     int m_lReputation;                  // XREF: ATaskTempl::RecursiveCalcAward(TaskInterface *,ActiveTaskList *,ActiveTaskEntry *,ulong,int,ulong &,ulong &,ulong &,uchar &,long &)+126/r
+00000019     unsigned int m_ulNewPeriod;
+0000001D     unsigned int m_ulNewRelayStation;
+00000021     unsigned int m_ulStorehouseSize;
+00000025     unsigned int m_ulStorehouseSize2;
+00000029     unsigned int m_ulStorehouseSize3;
+0000002D     unsigned int m_ulStorehouseSize4;
+00000031     int m_lInventorySize;
+00000035     unsigned int m_ulPetInventorySize;
+00000039     unsigned int m_ulFuryULimit;
+0000003D     unsigned int m_ulTransWldId;
+00000041     ZONE_VERT m_TransPt;
+0000004D     int m_lMonsCtrl;
+00000051     bool m_bTrigCtrl;
+00000052     bool m_bUseLevCo;
+00000053     bool m_bDivorce;
+00000054     bool m_bSendMsg;
+00000055     int m_nMsgChannel;
+00000059     unsigned int m_ulCandItems;         // XREF: ATaskTempl::RecursiveCalcAward(TaskInterface *,ActiveTaskList *,ActiveTaskEntry *,ulong,int,ulong &,ulong &,ulong &,uchar &,long &)+130/r
+00000059                                         // ATaskTempl::RecursiveCalcAward(TaskInterface *,ActiveTaskList *,ActiveTaskEntry *,ulong,int,ulong &,ulong &,ulong &,uchar &,long &)+142/r
+0000005D     AWARD_ITEMS_CAND *m_CandItems;      // XREF: ATaskTempl::RecursiveCalcAward(TaskInterface *,ActiveTaskList *,ActiveTaskEntry *,ulong,int,ulong &,ulong &,ulong &,uchar &,long &)+166/r
+00000061     unsigned int m_ulSummonedMonsters;
+00000065     AWARD_MONSTERS_SUMMONED *m_SummonedMonsters;
+00000069     bool m_bAwardDeath;
+0000006A     bool m_bAwardDeathWithLoss;
+0000006B     unsigned int m_ulDividend;
+0000006F     bool m_bAwardSkill;
+00000070     int m_iAwardSkillID;
+00000074     int m_iAwardSkillLevel;
+00000078     unsigned int m_ulSpecifyContribTaskID;
+0000007C     unsigned int m_ulSpecifyContribSubTaskID;
+00000080     unsigned int m_ulSpecifyContrib;
+00000084     unsigned int m_ulContrib;
+00000088     unsigned int m_ulRandContrib;
+0000008C     unsigned int m_ulLowestcontrib;
+00000090     int m_iFactionContrib;
+00000094     int m_iFactionExpContrib;
+00000098     unsigned int m_ulPQRankingAwardCnt;
+0000009C     AWARD_PQ_RANKING *m_PQRankingAward;
+000000A0     unsigned int m_ulChangeKeyCnt;
+000000A4     int *m_plChangeKey;
+000000A8     int *m_plChangeKeyValue;
+000000AC     bool *m_pbChangeType;
+000000B0     unsigned int m_ulHistoryChangeCnt;
+000000B4     int *m_plHistoryChangeKey;
+000000B8     int *m_plHistoryChangeKeyValue;
+000000BC     bool *m_pbHistoryChangeType;
+000000C0     bool m_bMulti;
+000000C1     int m_nNumType;
+000000C5     int m_lNum;
+000000C9     unsigned int m_ulDisplayKeyCnt;
+000000CD     int *m_plDisplayKey;
+000000D1     unsigned int m_ulExpCnt;
+000000D5     char (*m_pszExp)[64];
+000000D9     TASK_EXPRESSION (*m_pExpArr)[64];
+000000DD     unsigned int m_ulTaskCharCnt;
+000000E1     task_char (*m_pTaskChar)[64];
+000000E5     int m_iForceContribution;
+000000E9     int m_iForceReputation;
+000000ED     int m_iForceActivity;
+000000F1     int m_iForceSetRepu;
+000000F5     int m_iTaskLimit;
+000000F9     unsigned int m_ulTitleNum;
+000000FD     TITLE_AWARD *m_pTitleAward;
+00000101     int m_iLeaderShip;
+00000105 };

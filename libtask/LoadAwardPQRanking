@@ -1,0 +1,39 @@
+bool __cdecl LoadAwardPQRanking(FILE *fp, AWARD_PQ_RANKING *const pr, unsigned int ulVersion)
+{
+  RANKING_AWARD *rAward; // [esp+14h] [ebp-124h]
+  int nRead; // [esp+18h] [ebp-120h] BYREF
+  unsigned int i; // [esp+1Ch] [ebp-11Ch]
+  char line[280]; // [esp+20h] [ebp-118h] BYREF
+
+  pr->m_bAwardByProf = 0;
+  if ( ulVersion <= 0x46 )
+    return 1;
+  if ( ReadLine(fp, line) )
+  {
+    sscanf(line, "PQAwardByProf: %u", &nRead);
+    pr->m_bAwardByProf = nRead != 0;
+    if ( pr->m_ulRankingAwardNum )
+    {
+      pr->m_RankingAward = (RANKING_AWARD *)operator new[](21 * pr->m_ulRankingAwardNum);
+      ++g_ulNewCount;
+    }
+    for ( i = 0; i < pr->m_ulRankingAwardNum; ++i )
+    {
+      rAward = &pr->m_RankingAward[i];
+      if ( !ReadLine(fp, line) )
+        return 0;
+      sscanf(
+        line,
+        "RankStart: %d RankEnd: %d ItemID: %d IsCommonItem: %d ItemNum: %d Period %d",
+        rAward,
+        &rAward->m_iRankingEnd,
+        &rAward->m_ulAwardItemId,
+        &nRead,
+        &rAward->m_ulAwardItemNum,
+        &rAward->m_lPeriod);
+      rAward->m_bCommonItem = nRead != 0;
+    }
+    return 1;
+  }
+  return 0;
+}

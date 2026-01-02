@@ -1,0 +1,8 @@
+00000000 struct __cppobj __attribute__((packed)) __attribute__((aligned(2))) AWARD_MONSTERS_SUMMONED // sizeof=0xE
+00000000 {
+00000000     unsigned int m_ulMonsterNum;
+00000004     bool m_bRandChoose;
+00000005     unsigned int m_ulSummonRadius;
+00000009     bool m_bDeathDisappear;
+0000000A     MONSTERS_SUMMONED *m_Monsters;
+0000000E };

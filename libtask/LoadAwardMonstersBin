@@ -1,0 +1,23 @@
+bool __cdecl LoadAwardMonstersBin(FILE *fp, AWARD_MONSTERS_SUMMONED *const ms, unsigned int ulVersion)
+{
+  unsigned int i; // [esp+Ch] [ebp-Ch]
+
+  fread(&ms->m_bRandChoose, 1u, 1u, fp);
+  fread(&ms->m_ulSummonRadius, 4u, 1u, fp);
+  fread(&ms->m_bDeathDisappear, 1u, 1u, fp);
+  if ( ms->m_Monsters )
+  {
+    operator delete[](ms->m_Monsters);
+    ms->m_Monsters = 0;
+    ++g_ulDelCount;
+  }
+  ms->m_Monsters = 0;
+  if ( ms->m_ulMonsterNum )
+  {
+    ms->m_Monsters = (MONSTERS_SUMMONED *)operator new[](16 * ms->m_ulMonsterNum);
+    ++g_ulNewCount;
+  }
+  for ( i = 0; i < ms->m_ulMonsterNum; ++i )
+    fread(&ms->m_Monsters[i], 0x10u, 1u, fp);
+  return 1;
+}
