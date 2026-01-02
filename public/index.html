@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quest Editor (RAW Mode)</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-layout">
+        <!-- Toolbar -->
+        <!-- <div class="main-toolbar">
+            <div class="toolbar-group">
+                <button class="icon-btn" title="New"><i class="fas fa-file"></i></button>
+                <button class="icon-btn" title="Open"><i class="fas fa-folder-open"></i></button>
+                <button class="icon-btn" title="Save"><i class="fas fa-save"></i></button>
+            </div>
+            <div class="separator"></div>
+            <div class="toolbar-group">
+                <button class="icon-btn" title="Refresh" onclick="loadQuests()"><i class="fas fa-sync-alt"></i></button>
+            </div>
+        </div> -->
+
+        <!-- Main Content -->
+        <div class="content-area">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <input type="text" class="search-input" placeholder="Search quests..." id="searchInput">
+                </div>
+                <div class="quest-list-container" id="questList">
+                    <!-- Quest Items -->
+                </div>
+                <div class="status-bar"
+                    style="background: transparent; color: var(--text-muted); border-top: 1px solid var(--border);">
+                    <span id="totalCount">0 Items</span>
+                </div>
+            </div>
+
+            <!-- Main Panel -->
+            <div class="main-panel">
+                <div id="welcomeMessage" class="empty-state">
+                    Select a quest to view RAW data
+                </div>
+
+                <div id="questDetails" class="details-view hidden">
+                    <!-- Simple Header -->
+                    <div style="padding: 10px; border-bottom: 1px solid var(--border); background: var(--bg-header);">
+                        <span id="questId" style="color: var(--text-accent); font-family: monospace;"></span>
+                        <span id="questTitle" style="margin-left: 10px; font-weight: bold;"></span>
+                    </div>
+
+                    <!-- Single Content Area for JSON -->
+                    <div style="flex: 1; padding: 0; overflow: hidden; display: flex;">
+                        <textarea id="jsonPreview"
+                            style="flex: 1; background: #1e1e1e; color: #d4d4d4; border: none; padding: 10px; font-family: 'Consolas', monospace; font-size: 13px; resize: none;"
+                            readonly></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span>Ready</span>
+            <span>Version: 118</span>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <div class="loading-text" id="loadingStatus">Loading...</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
